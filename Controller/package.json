@@ -1,0 +1,9 @@
+{
+    "name": "SellSwords_and_spellcraft_2",
+    "version": "0.0.1",
+    "description": "Interactive web based game",
+    "dependencies": {
+        "express": "^4.18.2",
+        "socket.io": "^4.6.1"
+    }
+}
