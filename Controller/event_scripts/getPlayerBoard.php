@@ -8,8 +8,11 @@ $statement = $db->prepare($query);
 $statement->bindValue(':playerID', "%".$playerID."%", PDO::PARAM_STR);
 $statement->execute();
 $playerBoard = $statement->fetch();
-
-
-echo ("") ;
+$response = "";
+foreach ($playerBoard as $element){
+    $response .= $element;
+    $response .= "|";
+}
+echo (substr($response, 0, -1)) ;
 
 ?>
