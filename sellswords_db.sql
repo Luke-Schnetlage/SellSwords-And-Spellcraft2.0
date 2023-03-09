@@ -168,3 +168,8 @@ CREATE TABLE IF NOT EXISTS player_board (
     FOREIGN KEY (invocation2_slot) REFERENCES spell(spellid),
     FOREIGN KEY (invocation3_slot) REFERENCES spell(spellid)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE USER 'luke'@'localhost' IDENTIFIED BY 'YGEsAd39';
+GRANT SELECT, INSERT, DELETE, UPDATE
+TO luke@localhost
+IDENTIFIED BY 'YGEsAd39';
