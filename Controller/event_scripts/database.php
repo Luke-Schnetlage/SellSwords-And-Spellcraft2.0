@@ -9,7 +9,7 @@ try {
 } catch (PDOException $e) {
 	$error_message = $e->getMessage();
 	//echo $error_message;
-	include('databaseError.php');
+	echo("ERROR, DB CONNECT FAILED");
 	exit();
 }
 ?>
