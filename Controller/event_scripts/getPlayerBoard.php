@@ -1,5 +1,6 @@
 <?php
 require_once('database.php');
+global $db;    
 $playerID = filter_input(INPUT_GET, 'playerID');
 $gameID = filter_input(INPUT_GET, 'gameID');
 	
