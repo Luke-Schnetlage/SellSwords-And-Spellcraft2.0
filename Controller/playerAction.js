@@ -24,6 +24,8 @@ io.on("connection", (socket) => {
     socket.on("get_player_board_push", (playerID, gameID) => {
         socket.emit("get_player_board_pull",  getPlayerBoard(playerID,gameID));
     })
+
+
 })
 
 server.listen(3001, () => {
@@ -41,7 +43,7 @@ function getPlayerBoard(playerID,gameID) {
         }
     }
     var queryString = "?playerID=" + playerID + "?gameID=" + gameID;
-    ajaxRequest.open("GET", "getPlayerBoard.php" + queryString, true);
+    ajaxRequest.open("GET", "event_scripts/getPlayerBoard.php" + queryString, true);
     ajaxRequest.send(null);
 }
 
