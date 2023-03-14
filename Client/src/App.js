@@ -7,6 +7,7 @@ import Game from "./Game"
 import Home from "./Home"
 import Login from "./Login"
 import Rules from "./Rules"
+import Footer from "./Footer"
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
         <Route path="/rules" element={ <Rules />} />
       </Routes>
     </div>
+    <Footer />
    </>
   );
 }

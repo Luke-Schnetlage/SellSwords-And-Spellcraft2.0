@@ -11,7 +11,6 @@ app.use(cors());
 const db = mysql.createConnection({
     user: "root",
     host: "localhost",
-    //password: "nicolas",
     database: "ntoweryo_sellswords_and_spellcrafts",
 })
 
@@ -24,7 +23,7 @@ app.post('/register', (req, res) => {
 
     //registers new user into dataabse
     db.query(
-        "INSERT INTO users (username, password) VALUES (?, ?)",
+        "INSERT INTO player (username, password) VALUES (?, ?)",
 
         //values to pass
         [username, password],
@@ -40,15 +39,13 @@ app.post('/register', (req, res) => {
 app.post('/login', (req, res) => {
 
     //grabbing information passed from frontend
-    //const username = req.body.username
-    //const password = req.body.password
     const user = req.body.user;
     const { username } = user;
     const { password } = user;
    
     //logins users
     db.query(
-        "SELECT * FROM users WHERE username = ? AND password = ?",
+        "SELECT * FROM player WHERE username = ? AND password = ?",
 
         //values to pass
         [username, password],
