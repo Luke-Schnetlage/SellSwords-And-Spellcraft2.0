@@ -1,6 +1,6 @@
 -- Table for storing the player information
 CREATE TABLE IF NOT EXISTS player (
-    playerid INT NOT NULL,
+    playerid INT NOT NULL AUTO_INCREMENT,
     username VARCHAR(30) NOT NULL,
     password VARCHAR(40) NOT NULL,
     PRIMARY KEY (playerid),
@@ -21,22 +21,13 @@ CREATE TABLE IF NOT EXISTS game (
     round_end TIMESTAMP NOT NULL, -- Store end time at end of the round
     -- max_players INT CHECK(max_players <= 2 AND max_players > 0), 
     start_playerid INT NOT NULL, 
+    join_playerid INT NOT NULL,
     result INT NOT NULL,
     move_timelimit INT NOT NULL,
     PRIMARY KEY (gameid),
 	FOREIGN KEY (start_playerid) REFERENCES player(playerid),
+    FOREIGN KEY (join_playerid) REFERENCES player(playerid),
     FOREIGN KEY (result) REFERENCES result(resultid)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- Table for storing the information about the players in a game
-CREATE TABLE IF NOT EXISTS member (
-    memberid INT NOT NULL,
-    playerid VARCHAR(30) NOT NULL,
-    matchid INT NOT NULL,
-    -- score DECIMAL(5,2) NOT NULL, !!!NOT SURE IF NECESSARY!!!
-    PRIMARY KEY (memberid),
-    FOREIGN KEY (playerid) REFERENCES player(username),
-    FOREIGN KEY (matchid) REFERENCES game(gameid)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- Table for storing the information about the energy types in the game
@@ -94,19 +85,19 @@ CREATE TABLE IF NOT EXISTS terrain (
 -- Table for storing the information about the cards in a player's hand
 CREATE TABLE IF NOT EXISTS card_in_hand (
     card_in_handid INT NOT NULL,
-    memberid INT NOT NULL,
+    playerid INT NOT NULL,
     PRIMARY KEY (card_in_handid),
     FOREIGN KEY (card_in_handid) REFERENCES card(cardid),
-    FOREIGN KEY (memberid) REFERENCES member(memberid)
+    FOREIGN KEY (playerid) REFERENCES player(playerid)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- Table for storing the information about the cards in the discard stack
 CREATE TABLE IF NOT EXISTS card_in_discard (
     card_in_discardid INT NOT NULL,
-    memberid INT NOT NULL,
+    playerid INT NOT NULL,
     PRIMARY KEY (card_in_discardid),
     FOREIGN KEY (card_in_discardid) REFERENCES card(cardid),
-    FOREIGN KEY (memberid) REFERENCES member(memberid)
+    FOREIGN KEY (playerid) REFERENCES player(playerid)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- Table for storing the information about the zone traits
@@ -120,7 +111,7 @@ CREATE TABLE IF NOT EXISTS zone_traits (
 CREATE TABLE IF NOT EXISTS contested_zone (
     contested_zoneid INT NOT NULL,
     zoneid INT NOT NULL,
-    memberid INT NOT NULL,
+    playerid INT NOT NULL,
     zone1_effect VARCHAR(32),
     zone2_effect VARCHAR(32),
     zone3_effect VARCHAR(32),
@@ -132,7 +123,7 @@ CREATE TABLE IF NOT EXISTS contested_zone (
     zone3_slot INT,
     PRIMARY KEY (contested_zoneid),
     FOREIGN KEY (zoneid) REFERENCES zone_traits(zoneid),
-    FOREIGN KEY (memberid) REFERENCES member(memberid)
+    FOREIGN KEY (playerid) REFERENCES player(playerid)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- Table for storing the information about the actual game info
@@ -140,7 +131,7 @@ CREATE TABLE IF NOT EXISTS contested_zone (
 CREATE TABLE IF NOT EXISTS player_board (
     player_boardid INT NOT NULL,
     gameid INT NOT NULL,
-    memberid INT NOT NULL,
+    playerid INT NOT NULL,
     card_in_handid INT NOT NULL,
     card_in_discardid INT NOT NULL,
     contested_zoneid INT NOT NULL,
@@ -158,7 +149,7 @@ CREATE TABLE IF NOT EXISTS player_board (
     AFKwarnings SMALLINT,
     PRIMARY KEY (player_boardid),
     FOREIGN KEY (gameid) REFERENCES game(gameid),
-    FOREIGN KEY (memberid) REFERENCES member(memberid),
+    FOREIGN KEY (playerid) REFERENCES player(playerid),
     FOREIGN KEY (card_in_handid) REFERENCES card_in_hand(card_in_handid),
     FOREIGN KEY (card_in_discardid) REFERENCES card_in_discard(card_in_discardid),
     FOREIGN KEY (contested_zoneid) REFERENCES contested_zone(contested_zoneid),
