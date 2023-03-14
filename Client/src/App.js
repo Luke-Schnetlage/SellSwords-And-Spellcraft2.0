@@ -1,6 +1,8 @@
 //library for routing functionality (Lets pages load w/o refreshing)
 import { Route, Routes } from "react-router-dom"
 
+//CSS
+import './styles.css';
 //relative HTML
 import Navbar from "./Navbar"
 import Game from "./Game"
